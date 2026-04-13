@@ -5,21 +5,38 @@ from pathlib import Path
 import sqlite3
 
 import pandas as pd
-import numpy as np
-from matplotlib import pyplot as plt
-from scipy import stats
-import seaborn as sns
 
 
 def get_clockwise_slide_distance(start_location: int, end_location: int) -> int:
+    """
+    Calculates the clockwise slide distance between two locations, in zones.
+
+    :param start_location: The location that the slide starts at.
+    :param end_location: The location that the slide ends at.
+    :return: The number of zones the slide would travel in a clockwise direction.
+    """
     return abs(start_location - end_location)
 
 
 def get_counter_clockwise_slide_distance(start_location: int, end_location: int) -> int:
+    """
+    Calculates the counter-clockwise slide distance between two locations, in zones.
+
+    :param start_location: The location that the slide starts at.
+    :param end_location: The location that the slide ends at.
+    :return: The number of zones the slide would travel in a counter-clockwise direction.
+    """
     return 7 - abs(start_location - end_location)
 
 
 def get_shortest_slide_distance(start_location: int, end_location: int) -> int:
+    """
+    Calculates both clockwise and counter-clockwise slide distances, then returns the shortest of the two.
+
+    :param start_location: The location that the slide starts at.
+    :param end_location: The location that the slide ends at.
+    :return: The shortest slide distance.
+    """
     return min(
         get_clockwise_slide_distance(start_location, end_location),
         get_counter_clockwise_slide_distance(start_location, end_location)
@@ -27,6 +44,15 @@ def get_shortest_slide_distance(start_location: int, end_location: int) -> int:
 
 
 def get_distance_for_slide(start_location: int, end_location: int, slide_pattern: SlidePattern) -> int:
+    """
+    Gets the most relevant slide distance based on the `slide_pattern`. The distance method is based on
+    how the pattern is treated in-game.
+
+    :param start_location: The location that the slide starts at.
+    :param end_location: The location that the slide ends at.
+    :param slide_pattern: The pattern of the slide.
+    :return: The distance that is most representative of the slide.
+    """
     match slide_pattern.value:
         case SlidePattern.no_slide.value:
             raise ValueError('`no_slide` cannot be used to calculate slide cw_distance.')

@@ -15,6 +15,9 @@ difficulty_colours = {
 
 
 class SlidePattern(IntEnum):
+    """
+    Enumerates all slide pattern IDs within Maimai FiNALE
+    """
     no_slide = 0
     straight = 1
     ccw_edge = 2
@@ -32,6 +35,9 @@ class SlidePattern(IntEnum):
 
 
 class ChartDifficulty(IntEnum):
+    """
+    Enumerates all non-UTAGE difficulties within Maimai FiNALE.
+    """
     easy = 1
     basic = 2
     advanced = 3
@@ -41,8 +47,11 @@ class ChartDifficulty(IntEnum):
 
 
 class SDTRowWithMetadata(BaseModel):
+    """
+    A model including both all data about an SDT note, and significant data about the song it is a part of.
+    """
     whole_measure: int = Field(ge=0)
-    fractional_measure: float = Field(ge=0, le=1) # SCT Can have this as 1, look into this
+    fractional_measure: float = Field(ge=0, le=1)  # SCT Can have this as 1, look into this
     duration: float = Field(ge=0)
     location: int = Literal[0, 1, 2, 3, 4, 5, 6, 7]
     note_type: int = Literal[0, 1, 2, 3, 4, 5, 128]
@@ -56,6 +65,10 @@ class SDTRowWithMetadata(BaseModel):
 
 
 class SlideParams(BaseModel):
+    """
+    A model including any data to be analysed surrounding a slide note.
+    Includes all SDT slide data, significant song data and the chart format version which this note was within.
+    """
     star_duration: float = Field(ge=0)
     slide_duration: float = Field(ge=0)
     slide_delay: float = Field(ge=0)
